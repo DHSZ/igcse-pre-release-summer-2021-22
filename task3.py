@@ -160,8 +160,14 @@ most_popular_tickets = -1
 # 0-3 is uphill, 4-7 is downhill
 most_popular_index = -1
 
+# Stores the total number of passengers
+daily_passenger_total = 0
+
+# Stores the total amount of money received for the day
+daily_cash_total = 0
+
 # Output the totals for all services uphill
-print("\n--- END OF DAY TOTALS ---")
+print("\n--- END OF DAY ---")
 for m in range(JOURNEYS_EACH_DAY):
 
     current_tickets = 480 - train_seats_up[m]
@@ -173,6 +179,10 @@ for m in range(JOURNEYS_EACH_DAY):
     if current_tickets > most_popular_tickets:
         most_popular_tickets = current_tickets
         most_popular_index = m
+
+    # Update the totals for total passengers and cash
+    daily_passenger_total = daily_passenger_total + current_tickets
+    daily_cash_total = daily_cash_total + money_up[m]
 
 # Output the totals for all services downhill
 for n in range(JOURNEYS_EACH_DAY):
@@ -192,7 +202,16 @@ for n in range(JOURNEYS_EACH_DAY):
         most_popular_tickets = current_tickets
         most_popular_index = n + 4
 
-# Final output for the most populat service of the day in terms of tickets sold
+    # Update the totals for total passengers and cash
+    daily_passenger_total = daily_passenger_total + current_tickets
+    daily_cash_total = daily_cash_total + money_down[n]
+
+# Output the total number of passenger journeys and total money taken
+print("\n--- DAILY TOTALS ---")
+print("Total passenger journeys:", daily_passenger_total)
+print("Total money taken:", daily_cash_total)
+
+# Final output for the most popular service of the day in terms of tickets sold
 print("\n--- MOST POPULAR SERVICE ---")
 
 # If the popular index is less than 4, the train service is uphill...
