@@ -153,4 +153,55 @@ while customer_type != 3:
     # Output the display board with the latest values
     display_board()
 
-print("Task 3 will happen here!")
+# This will store the larest number of tickets
+most_popular_tickets = -1
+
+# This will store the index array of the most popular train
+# 0-3 is uphill, 4-7 is downhill
+most_popular_index = -1
+
+# Output the totals for all services uphill
+print("\n--- END OF DAY TOTALS ---")
+for m in range(JOURNEYS_EACH_DAY):
+
+    current_tickets = 480 - train_seats_up[m]
+
+    print("Train time:", train_times_up[m],
+          "- passengers:", current_tickets,
+          "- cash total:", money_up[m])
+
+    if current_tickets > most_popular_tickets:
+        most_popular_tickets = current_tickets
+        most_popular_index = m
+
+# Output the totals for all services downhill
+for n in range(JOURNEYS_EACH_DAY):
+    # The final downhill service of the day has more seats than all other trains
+    if n == JOURNEYS_EACH_DAY - 1:
+        current_tickets = 640 - train_seats_down[n]
+        print("Train time:", train_times_down[n],
+              "- passengers:", current_tickets,
+              "- cash total:", money_down[n])
+    else:
+        current_tickets = 480 - train_seats_down[n]
+        print("Train time:", train_times_down[n],
+              "- passengers:", current_tickets,
+              "- cash total:", money_down[n])
+
+    if current_tickets > most_popular_tickets:
+        most_popular_tickets = current_tickets
+        most_popular_index = n + 4
+
+# Final output for the most populat service of the day in terms of tickets sold
+print("\n--- MOST POPULAR SERVICE ---")
+
+# If the popular index is less than 4, the train service is uphill...
+if most_popular_index < 4:
+    print("Train time:", train_times_up[most_popular_index],
+          "- tickets sold:", most_popular_tickets,
+          "- cash total:", money_up[most_popular_index])
+# Else, the service is downhill...
+else:
+    print("Train time:", train_times_down[most_popular_index - 4],
+          "- tickets sold:", most_popular_tickets,
+          "- cash total:", money_down[most_popular_index - 4])
